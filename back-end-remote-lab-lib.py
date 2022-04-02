@@ -28,77 +28,68 @@ app =  Flask(__name__)
 #resuelve la seguridad del navegador de bloquear las peticiones locales 
 CORS(app)
 
-#cors = CORS(app, resources={
-#    r"/*": {
-#        "origins":"*"
-#        }
-#    })
 
 
-from config import products
 
 @app.route('/ping')
 def ping():
     return jsonify({"message":"pong!"})
 
-@app.route('/info/parameters')
+@app.route('/read/all-params')
 def getParameters():
-    ser.send_cmd("{info:'all-params'}") 
+    ser.send_cmd("{read:'all-params'}") 
     json_fields = ser.read_answer()   
    # return (json_fields)
     return jsonify(json_fields)
 
-@app.route('/info/calibration')
+@app.route('/read/all-cfg')
 def getCalibration():
-    ser.send_cmd("{info:'all-calibration'}") 
+    ser.send_cmd("{read:'all-cfg'}") 
     json_fields = ser.read_answer()   
    # return (json_fields)
     return jsonify(json_fields)
 
-@app.route('/info/version')
+@app.route('/read/all-input')
+def getAllUint8():
+    ser.send_cmd("{read:'all-input'}") 
+    json_fields = ser.read_answer()   
+   # return (json_fields)
+    return jsonify(json_fields)
+
+@app.route('/read/version')
 def getVersion():
-    ser.send_cmd("{info:'version'}") 
+    ser.send_cmd("{read:'version'}") 
     json_fields = ser.read_answer()   
    # return (json_fields)
     return jsonify(json_fields)
 
-@app.route('/info/status')
+@app.route('/read/status')
 def getStatus():
-    ser.send_cmd("{info:'status'}") 
+    ser.send_cmd("{read:'status'}") 
     json_fields = ser.read_answer()   
    # return (json_fields)
     return jsonify(json_fields)
 
-@app.route('/info/reaction_one')
-def getReaction_one():
-    ser.send_cmd("{info:'reaction_one'}") 
+@app.route('/read/serial_level')
+def getSerialLevel():
+    ser.send_cmd("{read:'serial_level'}") 
     json_fields = ser.read_answer()   
    # return (json_fields)
     return jsonify(json_fields)
 
-@app.route('/info/reaction_two')
-def getReaction_two():
-    ser.send_cmd("{info:'reaction_two'}") 
-    json_fields = ser.read_answer()   
-   # return (json_fields)
-    return jsonify(json_fields)
+#{uint8_0:'1000' ,uint8_1:'2000',uint8_2:'3000' ,uint8_3:'4000',uint8_4:'5000'}
 
-@app.route('/info/flexion')
-def getFlexion():
-    ser.send_cmd("{info:'flexion'}") 
-    json_fields = ser.read_answer()   
-   # return (json_fields)
-    return jsonify(json_fields)
-
-
-
-
-
-
-@app.route('/parameters/distance/<string:distance>', methods=['PUT'])
-def putParmDistance(distance):    
-    ser.send_cmd("{distance:'"+distance+"'}")    
-    json_fields = ser.read_answer()   
+@app.route('/save/all-input', methods=['PUT'])                                                                                              
+def putSaveAllUint8():                                                                                                                              
+    data = request.get_json()
+    uint8_0 = data.get('input0')
+    uint8_1 = data.get('input1')
+    uint8_2 = data.get('input2')
+    uint8_3 = data.get('input3')
+    uint8_4 = data.get('input4')    
+    
+    ser.send_cmd("{input0:'" +str(data.get('input0'))+"',input1:'" +str(data.get('input1'))+"',input2:'" +str(data.get('input2'))+"',input3:'" +str(data.get('input3'))+"',input4:'" +str(data.get('input4'))+"'}") 
+    json_fields = ser.read_answer() 
     return jsonify(json_fields)
 
 
