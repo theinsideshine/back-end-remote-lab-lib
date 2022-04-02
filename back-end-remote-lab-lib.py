@@ -105,7 +105,7 @@ def putParmStepK(step_k):
     json_fields = ser.read_answer()   
     return jsonify(json_fields)
 
-@app.route('/comands/start', methods=['PUT'])
+@app.route('/cmd/start', methods=['PUT'])
 def putCmdStart():  #por razones de compatibilidad esta peticion es bloqueante.
     ser.send_cmd("{cmd:'start'}")
     while (True):
