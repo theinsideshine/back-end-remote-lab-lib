@@ -43,7 +43,7 @@ def getParameters():
     return jsonify(json_fields)
 
 @app.route('/read/all-cfg')
-def getCalibration():
+def getAllConfig():
     ser.send_cmd("{read:'all-cfg'}") 
     json_fields = ser.read_answer()   
    # return (json_fields)
@@ -66,6 +66,13 @@ def getAllOutputs():
 @app.route('/read/all-result')
 def getAllResult():
     ser.send_cmd("{read:'all-result'}") 
+    json_fields = ser.read_answer()   
+   # return (json_fields)
+    return jsonify(json_fields)
+
+@app.route('/read/all-lib')
+def getAllLib():
+    ser.send_cmd("{read:'all-lib'}") 
     json_fields = ser.read_answer()   
    # return (json_fields)
     return jsonify(json_fields)
@@ -94,15 +101,18 @@ def getSerialLevel():
 #{uint8_0:'1000' ,uint8_1:'2000',uint8_2:'3000' ,uint8_3:'4000',uint8_4:'5000'}
 
 @app.route('/save/all-input', methods=['PUT'])                                                                                              
-def putSaveAllUint8():                                                                                                                              
+def putSaveAllInput():                                                                                                                              
     data = request.get_json()
-    uint8_0 = data.get('input0')
-    uint8_1 = data.get('input1')
-    uint8_2 = data.get('input2')
-    uint8_3 = data.get('input3')
-    uint8_4 = data.get('input4')    
+    
     
     ser.send_cmd("{input0:'" +str(data.get('input0'))+"',input1:'" +str(data.get('input1'))+"',input2:'" +str(data.get('input2'))+"',input3:'" +str(data.get('input3'))+"',input4:'" +str(data.get('input4'))+"'}") 
+    json_fields = ser.read_answer() 
+    return jsonify(json_fields)
+
+@app.route('/save/all-cfg', methods=['PUT'])                                                                                              
+def putSaveAllCfg():                                                                                                                              
+    data = request.get_json()   
+    ser.send_cmd("{cfg0:'" +str(data.get('cfg0'))+"',cfg1:'" +str(data.get('cfg1'))+"',cfg2:'" +str(data.get('cfg2'))+"',cfg3:'" +str(data.get('cfg3'))+"',cfg4:'" +str(data.get('cfg4'))+"',cfg5:'" +str(data.get('cfg5'))+"',cfg6:'" +str(data.get('cfg6'))+"',cfg7:'" +str(data.get('cfg7'))+"',cfg8:'" +str(data.get('cfg8'))+"',cfg9:'" +str(data.get('cfg9'))+"'}") 
     json_fields = ser.read_answer() 
     return jsonify(json_fields)
 
