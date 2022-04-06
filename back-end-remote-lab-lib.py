@@ -56,6 +56,13 @@ def getAllUint8():
    # return (json_fields)
     return jsonify(json_fields)
 
+@app.route('/read/all-result')
+def getAllResult():
+    ser.send_cmd("{read:'all-result'}") 
+    json_fields = ser.read_answer()   
+   # return (json_fields)
+    return jsonify(json_fields)
+
 @app.route('/read/version')
 def getVersion():
     ser.send_cmd("{read:'version'}") 
