@@ -8,13 +8,13 @@ import time
 
 
 
-#Version 1.0.03 
+#Version 1.0.04 
 #      ADD print version     get/step_cal   get/put step_k
 
 ser = SerialDevice()
 json_fields = {} 
 print("Back-end RemoteLab-lib ")
-print("Version 1.0.00. ")
+print("Version 1.0.04 ")
 #if ser.open('/dev/ttyUSB0'): #Si no encuentra el COM LO BUSCA    
 if ser.open('COM11'):
     print("Conectado en windows")
@@ -50,8 +50,15 @@ def getCalibration():
     return jsonify(json_fields)
 
 @app.route('/read/all-input')
-def getAllUint8():
+def getAllInputs():
     ser.send_cmd("{read:'all-input'}") 
+    json_fields = ser.read_answer()   
+   # return (json_fields)
+    return jsonify(json_fields)
+
+@app.route('/read/all-output')
+def getAllOutputs():
+    ser.send_cmd("{read:'all-output'}") 
     json_fields = ser.read_answer()   
    # return (json_fields)
     return jsonify(json_fields)
