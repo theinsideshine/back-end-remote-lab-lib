@@ -8,13 +8,13 @@ import time
 
 
 
-#Version 1.0.04 
-#      ADD print version     get/step_cal   get/put step_k
+#Version 1.0.06 
+#     Se agrego soporte para mantenimiento
 
 ser = SerialDevice()
 json_fields = {} 
 print("Back-end RemoteLab-lib ")
-print("Version 1.0.04 ")
+print("Version 1.0.06 ")
 #if ser.open('/dev/ttyUSB0'): #Si no encuentra el COM LO BUSCA    
 if ser.open('COM11'):
     print("Conectado en windows")
@@ -98,13 +98,17 @@ def getSerialLevel():
    # return (json_fields)
     return jsonify(json_fields)
 
+@app.route('/save/serial_level', methods=['PUT'])                                                                                              
+def putSaveSerial():                                                                                                                              
+    ser.send_cmd("{serial_level:'0'}") 
+    json_fields = ser.read_answer() 
+    return jsonify(json_fields)
+
 #{uint8_0:'1000' ,uint8_1:'2000',uint8_2:'3000' ,uint8_3:'4000',uint8_4:'5000'}
 
 @app.route('/save/all-input', methods=['PUT'])                                                                                              
 def putSaveAllInput():                                                                                                                              
-    data = request.get_json()
-    
-    
+    data = request.get_json()    
     ser.send_cmd("{input0:'" +str(data.get('input0'))+"',input1:'" +str(data.get('input1'))+"',input2:'" +str(data.get('input2'))+"',input3:'" +str(data.get('input3'))+"',input4:'" +str(data.get('input4'))+"'}") 
     json_fields = ser.read_answer() 
     return jsonify(json_fields)
@@ -117,17 +121,7 @@ def putSaveAllCfg():
     return jsonify(json_fields)
 
 
-@app.route('/parameters/force/<string:force>', methods=['PUT'])
-def putParmForce(force):
-    ser.send_cmd("{force:'"+force+"'}")    
-    json_fields = ser.read_answer()   
-    return jsonify(json_fields)
 
-@app.route('/parameters/step_k/<string:step_k>', methods=['PUT'])
-def putParmStepK(step_k):
-    ser.send_cmd("{step_k:'"+step_k+"'}")    
-    json_fields = ser.read_answer()   
-    return jsonify(json_fields)
 
 @app.route('/cmd/start', methods=['PUT'])
 def putCmdStart():  #por razones de compatibilidad esta peticion es bloqueante.
