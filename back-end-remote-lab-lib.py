@@ -16,7 +16,7 @@ import time
 ser = SerialDevice()
 json_fields = {} 
 print("Back-end RemoteLab-lib ")
-print("Version 1.0.06 ")
+print("Version 2.0.00 ")
 #if ser.open('/dev/ttyUSB0'): #Si no encuentra el COM LO BUSCA    
 if ser.open('COM11'):
     print("Conectado en windows")
