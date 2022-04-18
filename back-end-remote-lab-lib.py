@@ -8,8 +8,9 @@ import time
 
 
 
-#Version 1.0.09 
+#Version 2.0.00 
 #     Se agrego soporte runExample3 y 4
+#     Los pedidos de ejecucion pasaron a ser GET ya que no trasportan data!!!
 
 
 ser = SerialDevice()
@@ -99,34 +100,34 @@ def getSerialLevel():
    # return (json_fields)
     return jsonify(json_fields)
 
-@app.route('/save/serial_level', methods=['PUT'])                                                                                              
+@app.route('/save/disable_serial')                                                                                              
 def putSaveSerial():                                                                                                                              
     ser.send_cmd("{serial_level:'0'}") 
     json_fields = ser.read_answer() 
     return jsonify(json_fields)
 
 
-@app.route('/save/run1', methods=['PUT'])                                                                                              
+@app.route('/save/run1')                                                                                              
 def putRunExample1():                                                                                                                              
     ser.send_cmd("{st_mode:'100'}") 
     json_fields = ser.read_answer() 
     return jsonify(json_fields)
 
-@app.route('/save/run2', methods=['PUT'])                                                                                              
+@app.route('/save/run2')                                                                                              
 def putRunExample2():                                                                                                                              
     ser.send_cmd("{st_mode:'101'}") 
     json_fields = ser.read_answer() 
     return jsonify(json_fields)
 
 
-@app.route('/save/run3', methods=['PUT'])                                                                                              
+@app.route('/save/run3')                                                                                              
 def putRunExample3():                                                                                                                              
     ser.send_cmd("{st_mode:'102'}") 
     json_fields = ser.read_answer() 
     return jsonify(json_fields)
 
 
-@app.route('/save/run4', methods=['PUT'])                                                                                              
+@app.route('/save/run4')                                                                                              
 def putRunExample4():                                                                                                                              
     ser.send_cmd("{st_mode:'103'}") 
     json_fields = ser.read_answer() 
@@ -151,7 +152,7 @@ def putSaveAllCfg():
 
 
 
-@app.route('/cmd/start', methods=['PUT'])
+@app.route('/cmd/start')
 def putCmdStart():  #por razones de compatibilidad esta peticion es bloqueante.
     ser.send_cmd("{cmd:'start'}")
     while (True):
