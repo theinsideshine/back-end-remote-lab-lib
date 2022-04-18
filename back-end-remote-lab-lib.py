@@ -8,8 +8,8 @@ import time
 
 
 
-#Version 1.0.08 
-#     Se agrego soporte runExample2
+#Version 1.0.09 
+#     Se agrego soporte runExample3 y 4
 
 
 ser = SerialDevice()
@@ -115,6 +115,20 @@ def putRunExample1():
 @app.route('/save/run2', methods=['PUT'])                                                                                              
 def putRunExample2():                                                                                                                              
     ser.send_cmd("{st_mode:'101'}") 
+    json_fields = ser.read_answer() 
+    return jsonify(json_fields)
+
+
+@app.route('/save/run3', methods=['PUT'])                                                                                              
+def putRunExample3():                                                                                                                              
+    ser.send_cmd("{st_mode:'102'}") 
+    json_fields = ser.read_answer() 
+    return jsonify(json_fields)
+
+
+@app.route('/save/run4', methods=['PUT'])                                                                                              
+def putRunExample4():                                                                                                                              
+    ser.send_cmd("{st_mode:'103'}") 
     json_fields = ser.read_answer() 
     return jsonify(json_fields)
 
