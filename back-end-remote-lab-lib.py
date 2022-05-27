@@ -7,7 +7,8 @@ import json
 import time
 
 
-
+#Version 2.0.01
+#Se corrigio recepcion de ejecucion del experimento.
 #Version 2.0.00 
 #     Se agrego soporte runExample3 y 4
 #     Los pedidos de ejecucion pasaron a ser GET ya que no trasportan data!!!
@@ -16,7 +17,7 @@ import time
 ser = SerialDevice()
 json_fields = {} 
 print("Back-end RemoteLab-lib ")
-print("Version 2.0.00 ")
+print("Version 2.0.01 ")
 #if ser.open('/dev/ttyUSB0'): #Si no encuentra el COM LO BUSCA    
 if ser.open('COM11'):
     print("Conectado en windows")
@@ -133,7 +134,7 @@ def putRunExample4():
     json_fields = ser.read_answer() 
     return jsonify(json_fields)
 
-#{uint8_0:'1000' ,uint8_1:'2000',uint8_2:'3000' ,uint8_3:'4000',uint8_4:'5000'}
+
 
 @app.route('/save/all-input', methods=['PUT'])                                                                                              
 def putSaveAllInput():                                                                                                                              
@@ -153,15 +154,15 @@ def putSaveAllCfg():
 
 
 @app.route('/cmd/start')
-def putCmdStart():  #por razones de compatibilidad esta peticion es bloqueante.
+def putCmdStart():  #por razones de compatibilidad esta peticion es bloqueante.   
     ser.send_cmd("{cmd:'start'}")
+    json_fields = ser.read_answer()
+    print (json_fields)
     while (True):
         json_fields = ser.read_answer() #viene convertido en dict usa ' '
-        print (json_fields)
-        print (json_fields.get('st_test'))        #chequea key = 'st_test'
+        print (json_fields)       
         if (("st_test" in json_fields) == True ) :#chequea el valor = 0
             if (json_fields.get('st_test') == 0):
-                print(1)
                 return jsonify(json_fields)
         
     

@@ -22,7 +22,7 @@ class SerialDevice():
         if not port:
             port = self.find_device_port()
         try:    
-            self.device = serial.Serial(port, 115200, timeout=1)
+            self.device = serial.Serial(port, 115200, timeout=60)
         except:
             return False
         
