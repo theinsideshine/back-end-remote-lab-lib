@@ -18,11 +18,11 @@ class SerialDevice():
 
         return ""  
 
-    def open(self, port):
+    def open(self, port, timeout):
         if not port:
             port = self.find_device_port()
         try:    
-            self.device = serial.Serial(port, 115200, timeout=60)
+            self.device = serial.Serial(port, 115200, timeout=timeout)
         except:
             return False
         
@@ -53,7 +53,7 @@ class SerialDevice():
 
         return bool(self.device.is_open) 
 
-    def read_answer(self):
+    def read_cmd(self,timeout):
         try:
             if (self.device.is_open == True):
                 line = self.device.read_until(b'}').decode("utf-8") 
