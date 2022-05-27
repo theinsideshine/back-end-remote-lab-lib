@@ -8,7 +8,7 @@ import json
 import time
 
 #Version 2.0.02
-#Se agrego soporte para recepcion por tread
+#Se agrego soporte para recepcion por thread
 
 #Version 2.0.01
 #Se corrigio recepcion de ejecucion del experimento.
@@ -20,7 +20,7 @@ import time
 ser = SerialDevice()
 json_fields = {} 
 
-# Si se usa la recepcion por thead el time out =1 ya que quee  no pierde ninguna recepcion 
+# Si se usa la recepcion por thread el time out =1 ya que quee  no pierde ninguna recepcion 
 # Si se usa la recepcion por polling el time_out=60 ya que este lo usa para esperar la ejecucion del experimento
 
 time_out = 60
