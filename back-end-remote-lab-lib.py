@@ -20,8 +20,8 @@ import time
 ser = SerialDevice()
 json_fields = {} 
 
-# Si se usa la recepcion por thread el time out =1 ya que quee  no pierde ninguna recepcion 
-# Si se usa la recepcion por polling el time_out=60 ya que este lo usa para esperar la ejecucion del experimento
+# Si se usa la recepcion por thread el  time_out = 1 ya que la Queue  no pierde ninguna recepcion.
+# Si se usa la recepcion por polling el time_out =60 ya que este lo usa para esperar la ejecucion del experimento.
 
 time_out = 60
 
